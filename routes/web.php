@@ -22,6 +22,11 @@ use App\Http\Controllers\Company\EmailTemplateController;
 use App\Http\Controllers\Company\CustomFormController;
 use App\Http\Controllers\Company\WebhookController;
 use App\Http\Controllers\Company\ActivityLogController;
+use App\Http\Controllers\Company\TeamNoteController;
+use App\Http\Controllers\Company\FeedbackController;
+use App\Http\Controllers\Company\MessagingController;
+use App\Http\Controllers\Company\AiController;
+use App\Http\Controllers\Company\ReportController;
 use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\CompanyController as SuperAdminCompanyController;
 
@@ -132,6 +137,39 @@ Route::middleware('company')->prefix('company')->name('company.')->group(functio
 
     // Activity Logs
     Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+
+    // Team Notes
+    Route::get('/team-notes', [TeamNoteController::class, 'index'])->name('team-notes.index');
+    Route::post('/team-notes', [TeamNoteController::class, 'store'])->name('team-notes.store');
+    Route::put('/team-notes/{id}', [TeamNoteController::class, 'update'])->name('team-notes.update');
+    Route::delete('/team-notes/{id}', [TeamNoteController::class, 'destroy'])->name('team-notes.destroy');
+    Route::post('/team-notes/{id}/toggle-pin', [TeamNoteController::class, 'togglePin'])->name('team-notes.toggle-pin');
+    Route::get('/team-notes/notable', [TeamNoteController::class, 'getByNotable'])->name('team-notes.by-notable');
+
+    // Feedback & Satisfaction
+    Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
+    Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+
+    // SMS & WhatsApp Messaging
+    Route::get('/messaging', [MessagingController::class, 'index'])->name('messaging.index');
+    Route::put('/messaging/channels/{id}', [MessagingController::class, 'updateChannel'])->name('messaging.channels.update');
+    Route::post('/messaging/templates', [MessagingController::class, 'storeTemplate'])->name('messaging.templates.store');
+    Route::post('/messaging/send', [MessagingController::class, 'sendMessage'])->name('messaging.send');
+    Route::get('/messaging/logs', [MessagingController::class, 'logs'])->name('messaging.logs');
+
+    // AI & Automation
+    Route::get('/ai-automation', [AiController::class, 'index'])->name('ai.index');
+    Route::post('/ai/smart-reply', [AiController::class, 'generateSmartReply'])->name('ai.smart-reply');
+    Route::post('/ai/sentiment', [AiController::class, 'analyzeSentiment'])->name('ai.sentiment');
+    Route::post('/ai/summary', [AiController::class, 'generateSummary'])->name('ai.summary');
+    Route::put('/ai/automation/{id}', [AiController::class, 'updateAutomation'])->name('ai.automation.update');
+
+    // Reports & Export
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::post('/reports/generate', [ReportController::class, 'generate'])->name('reports.generate');
+    Route::get('/reports/conversations', [ReportController::class, 'conversationReport'])->name('reports.conversations');
+    Route::get('/reports/tickets', [ReportController::class, 'ticketReport'])->name('reports.tickets');
+    Route::post('/reports/export', [ReportController::class, 'export'])->name('reports.export');
 });
 
 // Super Admin routes
