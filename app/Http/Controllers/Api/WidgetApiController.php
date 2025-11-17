@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Visitor;
 use App\Events\MessageSent;
 use App\Events\VisitorOnline;
+use App\Services\ChatbotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -148,9 +149,14 @@ class WidgetApiController extends Controller
         // Broadcast the message
         broadcast(new MessageSent($message));
 
+        // Process chatbot automated response
+        $chatbotService = app(ChatbotService::class);
+        $botResponse = $chatbotService->processMessage($message, $conversation);
+
         return response()->json([
             'conversation' => $conversation,
             'message' => $message,
+            'bot_response' => $botResponse,
         ]);
     }
 
@@ -199,7 +205,14 @@ class WidgetApiController extends Controller
         // Broadcast the message
         broadcast(new MessageSent($message));
 
-        return response()->json(['message' => $message]);
+        // Process chatbot automated response
+        $chatbotService = app(ChatbotService::class);
+        $botResponse = $chatbotService->processMessage($message, $conversation);
+
+        return response()->json([
+            'message' => $message,
+            'bot_response' => $botResponse,
+        ]);
     }
 
     private function autoAssignConversation($conversation)

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Company\DashboardController;
 use App\Http\Controllers\Company\ChatController;
 use App\Http\Controllers\Company\WidgetController;
+use App\Http\Controllers\Company\ChatbotController;
 
 // Public routes
 Route::get('/', function () {
@@ -47,4 +48,13 @@ Route::middleware('company')->prefix('company')->name('company.')->group(functio
     Route::get('/widget/settings', [WidgetController::class, 'index'])->name('widget.settings');
     Route::put('/widget/settings', [WidgetController::class, 'update'])->name('widget.update');
     Route::get('/widget/preview', [WidgetController::class, 'preview'])->name('widget.preview');
+
+    // Chatbot routes
+    Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot.index');
+    Route::post('/chatbot/triggers', [ChatbotController::class, 'storeTrigger'])->name('chatbot.triggers.store');
+    Route::put('/chatbot/triggers/{id}', [ChatbotController::class, 'updateTrigger'])->name('chatbot.triggers.update');
+    Route::delete('/chatbot/triggers/{id}', [ChatbotController::class, 'destroyTrigger'])->name('chatbot.triggers.destroy');
+    Route::post('/chatbot/responses', [ChatbotController::class, 'storeResponse'])->name('chatbot.responses.store');
+    Route::put('/chatbot/responses/{id}', [ChatbotController::class, 'updateResponse'])->name('chatbot.responses.update');
+    Route::delete('/chatbot/responses/{id}', [ChatbotController::class, 'destroyResponse'])->name('chatbot.responses.destroy');
 });
