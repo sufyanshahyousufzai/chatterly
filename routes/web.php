@@ -13,6 +13,12 @@ use App\Http\Controllers\Company\ClientPortalController;
 use App\Http\Controllers\Company\AttendanceController;
 use App\Http\Controllers\Company\DocumentController;
 use App\Http\Controllers\Company\AnalyticsController;
+use App\Http\Controllers\Company\RoleController;
+use App\Http\Controllers\Company\NotificationController;
+use App\Http\Controllers\Company\SettingsController;
+use App\Http\Controllers\Company\BillingController;
+use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
+use App\Http\Controllers\SuperAdmin\CompanyController as SuperAdminCompanyController;
 
 // Public routes
 Route::get('/', function () {
@@ -91,4 +97,27 @@ Route::middleware('company')->prefix('company')->name('company.')->group(functio
 
     // Analytics & Reports
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+
+    // Roles & Permissions
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+    // Settings
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+    // Billing
+    Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
+});
+
+// Super Admin routes
+Route::middleware('super_admin')->prefix('superadmin')->name('superadmin.')->group(function () {
+    Route::get('/dashboard', [SuperAdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/companies', [SuperAdminCompanyController::class, 'index'])->name('companies.index');
+    Route::get('/companies/{id}', [SuperAdminCompanyController::class, 'show'])->name('companies.show');
+    Route::put('/companies/{id}', [SuperAdminCompanyController::class, 'update'])->name('companies.update');
+    Route::delete('/companies/{id}', [SuperAdminCompanyController::class, 'destroy'])->name('companies.destroy');
 });
