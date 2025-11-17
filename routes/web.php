@@ -8,6 +8,11 @@ use App\Http\Controllers\Company\ChatController;
 use App\Http\Controllers\Company\WidgetController;
 use App\Http\Controllers\Company\ChatbotController;
 use App\Http\Controllers\Company\TicketController;
+use App\Http\Controllers\Company\KnowledgeBaseController;
+use App\Http\Controllers\Company\ClientPortalController;
+use App\Http\Controllers\Company\AttendanceController;
+use App\Http\Controllers\Company\DocumentController;
+use App\Http\Controllers\Company\AnalyticsController;
 
 // Public routes
 Route::get('/', function () {
@@ -66,4 +71,24 @@ Route::middleware('company')->prefix('company')->name('company.')->group(functio
     Route::put('/tickets/{id}', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('/tickets/{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
     Route::post('/tickets/{id}/replies', [TicketController::class, 'addReply'])->name('tickets.replies.store');
+
+    // Knowledge Base routes
+    Route::get('/kb', [KnowledgeBaseController::class, 'index'])->name('kb.index');
+    Route::get('/kb/{id}', [KnowledgeBaseController::class, 'show'])->name('kb.show');
+    Route::post('/kb', [KnowledgeBaseController::class, 'store'])->name('kb.store');
+    Route::put('/kb/{id}', [KnowledgeBaseController::class, 'update'])->name('kb.update');
+    Route::delete('/kb/{id}', [KnowledgeBaseController::class, 'destroy'])->name('kb.destroy');
+    Route::post('/kb/categories', [KnowledgeBaseController::class, 'storeCategory'])->name('kb.categories.store');
+
+    // Client Portal
+    Route::get('/portal', [ClientPortalController::class, 'index'])->name('portal.index');
+
+    // Attendance & Leave
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+
+    // Documents & Assets
+    Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
+
+    // Analytics & Reports
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
 });
