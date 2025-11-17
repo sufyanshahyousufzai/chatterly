@@ -17,6 +17,11 @@ use App\Http\Controllers\Company\RoleController;
 use App\Http\Controllers\Company\NotificationController;
 use App\Http\Controllers\Company\SettingsController;
 use App\Http\Controllers\Company\BillingController;
+use App\Http\Controllers\Company\PerformanceController;
+use App\Http\Controllers\Company\EmailTemplateController;
+use App\Http\Controllers\Company\CustomFormController;
+use App\Http\Controllers\Company\WebhookController;
+use App\Http\Controllers\Company\ActivityLogController;
 use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\CompanyController as SuperAdminCompanyController;
 
@@ -111,6 +116,22 @@ Route::middleware('company')->prefix('company')->name('company.')->group(functio
 
     // Billing
     Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
+
+    // Performance & Reports
+    Route::get('/performance', [PerformanceController::class, 'index'])->name('performance.index');
+
+    // Email Templates
+    Route::get('/email-templates', [EmailTemplateController::class, 'index'])->name('email-templates.index');
+
+    // Custom Forms
+    Route::get('/forms', [CustomFormController::class, 'index'])->name('forms.index');
+    Route::post('/forms', [CustomFormController::class, 'store'])->name('forms.store');
+
+    // Webhooks
+    Route::get('/webhooks', [WebhookController::class, 'index'])->name('webhooks.index');
+
+    // Activity Logs
+    Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
 });
 
 // Super Admin routes
