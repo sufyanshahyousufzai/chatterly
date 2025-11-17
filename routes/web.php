@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Company\DashboardController;
 
 // Public routes
 Route::get('/', function () {
@@ -31,7 +32,5 @@ Route::middleware('company')->prefix('company')->name('company.')->group(functio
         return Inertia::render('company/Onboarding');
     })->name('onboarding');
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('company/Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
