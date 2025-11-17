@@ -50,7 +50,7 @@ class Company extends Model
     public function visitors(): HasMany { return $this->hasMany(Visitor::class); }
     public function chatConversations(): HasMany { return $this->hasMany(ChatConversation::class); }
     public function tickets(): HasMany { return $this->hasMany(Ticket::class); }
-    public function chatWidgetSettings(): HasOne { return $this->hasOne(ChatWidgetSettings::class); }
+    public function chatWidgetSettings(): HasOne { return $this->hasOne(ChatWidgetSetting::class); }
     public function kbCategories(): HasMany { return $this->hasMany(KbCategory::class); }
     public function subscriptions(): HasMany { return $this->hasMany(Subscription::class); }
     public function customForms(): HasMany { return $this->hasMany(CustomForm::class); }
