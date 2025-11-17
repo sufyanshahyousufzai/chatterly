@@ -7,6 +7,7 @@ use App\Http\Controllers\Company\DashboardController;
 use App\Http\Controllers\Company\ChatController;
 use App\Http\Controllers\Company\WidgetController;
 use App\Http\Controllers\Company\ChatbotController;
+use App\Http\Controllers\Company\TicketController;
 
 // Public routes
 Route::get('/', function () {
@@ -57,4 +58,12 @@ Route::middleware('company')->prefix('company')->name('company.')->group(functio
     Route::post('/chatbot/responses', [ChatbotController::class, 'storeResponse'])->name('chatbot.responses.store');
     Route::put('/chatbot/responses/{id}', [ChatbotController::class, 'updateResponse'])->name('chatbot.responses.update');
     Route::delete('/chatbot/responses/{id}', [ChatbotController::class, 'destroyResponse'])->name('chatbot.responses.destroy');
+
+    // Ticket routes
+    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+    Route::get('/tickets/{id}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+    Route::put('/tickets/{id}', [TicketController::class, 'update'])->name('tickets.update');
+    Route::delete('/tickets/{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+    Route::post('/tickets/{id}/replies', [TicketController::class, 'addReply'])->name('tickets.replies.store');
 });
